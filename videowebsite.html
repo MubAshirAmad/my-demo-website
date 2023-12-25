@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Watching Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-right: 10px;
+        }
+
+        #search-bar {
+            margin: 10px;
+            padding: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #video-container {
+            max-width: 800px;
+            margin: 20px auto;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        #video-title {
+            margin: 10px;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #video-controls {
+            margin: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #counts {
+            margin: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .count {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        #comments {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #comments h3 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+        }
+
+        #comments-list {
+            padding: 20px;
+        }
+
+        #comment-form {
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        #like-button, #share-button, #subscribe-button {
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            padding: 5px 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="panda.png" alt="Mr. Panda Logo">
+        <h1>My First Website</h1>
+        <input type="text" id="search-bar" placeholder="Search...">
+    </header>
+
+    <div id="video-container">
+        <video controls>
+            <source src="Aaj Ro Len De 1920 LONDON. Neha Chanel - YouTube.MKV" type="video/mp4">
+            Your browser does not support the video tag.
+            #sadsong <div id="ajjroolanda"></div>
+        </video>
+        <h2 id="video-title">Aj roo lan da jee bhar k</h2>
+        <div id="video-controls">
+            <div>
+                <button id="like-button" onclick="likeVideo()">Like</button>
+                <button id="share-button" onclick="shareVideo()">Share</button>
+                <button id="subscribe-button" onclick="subscribeChannel()">Subscribe</button>
+            </div>
+            <div id="counts">
+                <span class="count" id="like-count">1000 Like</span>
+                <span class="count" id="share-count">1000 Share</span>
+                <span class="count" id="subscriber-count">1000 Subscribers</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="comments">
+        <h3>Add a comment</h3>
+        <div id="comments-list">
+            <!-- very sad song -->
+        </div>
+
+        <div id="comment-form">
+            <h3>Add a comment</h3>
+            <form id="add-comment-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="comment">Comment:</label><br>
+                <textarea id="comment" name="comment" rows="4" required></textarea><br>
+
+                <input type="submit" value="Submit Comment">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var likeCount = 1000;
+        var shareCount = 1000;
+        var subscriberCount = 1000;
+
+        function likeVideo() {
+            likeCount++;
+            alert('Video Liked!');
+            updateCounts();
+        }
+
+        function shareVideo() {
+            shareCount++;
+            alert('Video Shared!');
+            updateCounts();
+        }
+
+        function subscribeChannel() {
+            subscriberCount++;
+            alert('Subscribed!');
+            updateCounts();
+        }
+
+        function updateCounts() {
+            document.getElementById('like-count').textContent = likeCount + ' Like';
+            document.getElementById('share-count').textContent = shareCount + ' Share';
+            document.getElementById('subscriber-count').textContent = subscriberCount + ' Subscribers';
+        }
+
+        // Comment handling logic
+        document.getElementById('add-comment-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get values from the form
+            var name = document.getElementById('name').value;
+            var commentText = document.getElementById('comment').value;
+
+            // Create a new comment element
+            var newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = '<strong>' + name + ':</strong> ' + commentText;
+
+            // Add like and delete buttons for each comment
+            newComment.innerHTML += '<div class="comment-options">' +
+                '<span class="like-button" onclick="likeComment(this)">Like</span>' +
+                '<span class="delete-button" onclick="deleteComment(this)">Delete</span>' +
+                '</div>';
+
+            // Append the new comment to the comments list
+            var commentsList = document.getElementById('comments-list');
+            commentsList.appendChild(newComment);
+
+            // Clear the form fields
+            document.getElementById('name').value = '';
+            document.getElementById('comment').value = '';
+        });
+
+        // Like and Delete functionality for comments
+        function likeComment(likeButton) {
+            alert('Comment Liked!');
+        }
+
+        function deleteComment(deleteButton) {
+            var comment = deleteButton.parentNode.parentNode;
+            comment.parentNode.removeChild(comment);
+            alert('Comment Deleted!');
+        }
+
+        // Video audio control
+        document.getElementById('audio-control').addEventListener('change', function () {
+            var video = document.querySelector('video');
+            video.muted = !this.checked;
+        });
+    </script>
+</body>
+</html>
